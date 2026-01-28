@@ -1,0 +1,35 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  z-index: 5;                    /* 🔥 above video + overlay */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);   /* glass effect */
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo {
+  font-size: 2rem;
+  color: white;
+}
+
+.brand-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.navbar hr {
+  margin-top: 0.6rem;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
