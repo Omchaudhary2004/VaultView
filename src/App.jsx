@@ -6,18 +6,19 @@ import Landing from '../pages/landing'
 import "../pages/landing.css"
 import {Routes ,Route ,BrowserRouter } from 'react-router-dom'
 import Wallet_info from '../pages/wallet_section'
-function App() {
+import InputCheck from '../pages/test'
 
+function App() {
 
   return (
     <BrowserRouter>
     <Routes>
     <Route  path="/" element={<Landing />} />
-    <Route  path="/Solana" element={<Wallet_info />} />
-    <Route  path="/Ethereum" element={<Wallet_info />} />
+    <Route  path="/:name" element={<Wallet_info />} />
+    <Route  path="/:name" element={<Wallet_info />} />
+    <Route  path="/test" element={<InputCheck />} />
     </Routes>
     </BrowserRouter>
-    
   )
 }
 

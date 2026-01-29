@@ -1,0 +1,200 @@
+/* html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Wrapper */
+.video-wrapper {
+  position: fixed;
+  inset: 0;
+  background: black;
+}
+
+/* Video */
+.video-bg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 80%;
+  object-fit: contain;
+  z-index: -2;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: -1;
+}
+
+/* Main content */
+.content {
+  position: absolute;
+  top: 120px;              /* ⬇ below navbar */
+  left: 80px;              /* ⬅ aligned after navbar HR */
+  z-index: 2;
+  color: white;
+  text-align: left;
+  max-width: 600px;
+}
+
+/* Big headline */
+.content h1 {
+  font-size: 3rem;         /* 🔥 bigger */
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+/* Smaller paragraph */
+.content p {
+  font-size: 0.95rem;      /* ⬇ smaller */
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+}
+
+/* Buttons */
+.content button {
+  margin-right: 1rem;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.15); /* translucent */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;   /* 🔵 rounded */
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.content button:hover {
+  background: white;
+  color: black;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.footer hr {
+  width: 200px;
+  margin: 0 auto 0.5rem;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.inputfeild{
+    opacity: 50%;
+    color: black;
+    width: 1000px;
+    height: 30px;
+} */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= MAIN CONTENT ================= */
+
+.content {
+  position: absolute;
+  top: 120px;
+  left: 80px;
+  z-index: 2;
+  color: white;
+  max-width: 650px;
+}
+
+/* Heading */
+.content h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+/* Input + button wrapper */
+.content > div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ================= INPUT ================= */
+
+.inputfeild {
+  flex: 1;
+  height: 44px;
+  padding: 0 1rem;
+  font-size: 0.95rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  outline: none;
+  backdrop-filter: blur(6px);
+}
+
+.inputfeild::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.inputfeild:focus {
+  border-color: white;
+}
+
+/* ================= BUTTON ================= */
+
+.content button {
+  padding: 0.7rem 1.6rem;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.content button:hover {
+  background: white;
+  color: black;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.footer hr {
+  width: 200px;
+  margin: 0 auto 0.5rem;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}

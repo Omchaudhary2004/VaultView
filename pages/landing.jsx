@@ -2,7 +2,17 @@ import bg from "../assets/bg.mp4";
 import Nav_bar from "./navbars";
 import "./landing.css";
 import Footers from "./footer";
+import { useNavigate } from 'react-router-dom';
+
+
 function Landing() {
+  const navigate = useNavigate();
+  const handelSolana = () =>{
+    navigate("/Solana");
+  }
+  const handelEth = () =>{
+    navigate("/Ethereum");
+  }
   return (
     <div className="video-wrapper">
       <video
@@ -20,8 +30,8 @@ function Landing() {
         <Nav_bar />
         <h1>Recover Wallet and View Balance Securely</h1>
         <p>Choose a blockchain to get started.</p>
-        <button>Solana</button>
-        <button>Ethereum</button>
+        <button onClick={handelSolana}>Solana</button>
+        <button onClick={handelEth}>Ethereum</button>
       </div>
       <Footers />
     </div>
