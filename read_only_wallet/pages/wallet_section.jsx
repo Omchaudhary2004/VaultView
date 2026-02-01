@@ -31,7 +31,7 @@ function Wallet_info() {
     alert("Please enter private key");
     return;
     }
-    const response = await axios.post("http://localhost:3000/balance_get", {
+    const response = await axios.post("https://vaultview-backend.onrender.com/balance_get", {
       key_p: privkey,
       pa: path
     });
@@ -43,7 +43,7 @@ function Wallet_info() {
   const generateWallet = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/init-wallet");
+      const res = await fetch("https://vaultview-backend.onrender.com/init-wallet");
       const data = await res.json();
       setText(data.mnemonic);
     } catch (error) {
@@ -60,7 +60,7 @@ function Wallet_info() {
     setMnemonicWords(words);
 
     try {
-      const res = await axios.post("http://localhost:3000/add-wallet", {
+      const res = await axios.post("https://vaultview-backend.onrender.com/add-wallet", {
         muword: text,
       });
 
@@ -80,7 +80,7 @@ function Wallet_info() {
   /* Add next wallet - creates additional wallets from same mnemonic */
   const addNextWallet = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/add-wallet", {
+      const res = await axios.post("https://vaultview-backend.onrender.com/add-wallet", {
         muword: text,
       });
 
@@ -100,7 +100,7 @@ function Wallet_info() {
   /* Fetch balance using private key */
   const fetchBalance = async (privateKey) => {
     try {
-      const res = await axios.post("http://localhost:3000/check-balance", {
+      const res = await axios.post("https://vaultview-backend.onrender.com/check-balance", {
         privateKey: privateKey || balance,
       });
       setBalance(res.data.balance.replace('$', ''));
