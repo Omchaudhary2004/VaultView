@@ -12,15 +12,33 @@ function Wallet_info() {
   const [text, setText] = useState("");
   const [mnemonicWords, setMnemonicWords] = useState([]);
   const [wallets, setWallets] = useState([]); // Store multiple wallets
-  const [balance, setBalance] = useState("0.00"); // Balance state
-
+  // const [balance, setBalance] = useState("0.00"); // Balance state
+  const [privkey, privkeyy] = useState('');
+  const [balance, setBalance] = useState(0.00);
   const isEmpty = text.trim().length === 0;
+
+
+  
 
   const path =
     name === "Solana"
       ? "m/44'/501'/0'/0'"
       : "m/44'/60'/0'/0/0";
 
+
+    const handleLog = async() => {
+    if (!privkey) {
+    alert("Please enter private key");
+    return;
+    }
+    const response = await axios.post("http://localhost:3000/balance_get", {
+      key_p: privkey,
+      pa: path
+    });
+
+    setBalance(response.data.reply);
+
+  };
   /* Generate mnemonic */
   const generateWallet = async (e) => {
     e.preventDefault();
@@ -144,7 +162,7 @@ function Wallet_info() {
                 </div>
               </div>
 
-              <div className="card">
+              {/* <div className="card">
                 <h3>Total Balance</h3>
                 <input
                   type="text"
@@ -162,6 +180,15 @@ function Wallet_info() {
                   Fetch Balance
                 </button>
                 <div className="balance">${balance}</div>
+              </div> */}
+              <div className="card">
+                <h3>Total Balance</h3>
+                <input type="text" className="balance-input" placeholder="Enter Your Public Key" value={privkey}  onChange={(e) => privkeyy(e.target.value)}  />
+                <button className="fetch-balance-btn" onClick={handleLog}>
+                  Fetch Balance
+                </button>
+                <div className="balance">${balance}</div>
+
               </div>
             </div>
 
@@ -189,9 +216,7 @@ function Wallet_info() {
                             className="copy-btn"
                             onClick={() => copyToClipboard(wallet.publicKey, "Public Key")}
                             title="Copy to clipboard"
-                          >
-                            📋
-                          </button>
+                          >Copy</button>
                         </div>
                         <p className="mono">{wallet.publicKey}</p>
                       </div>
@@ -204,7 +229,7 @@ function Wallet_info() {
                             onClick={() => copyToClipboard(wallet.privateKey, "Private Key")}
                             title="Copy to clipboard"
                           >
-                            📋
+                            Copy
                           </button>
                         </div>
                         <p

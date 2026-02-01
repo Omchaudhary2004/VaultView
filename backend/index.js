@@ -1,168 +1,16 @@
-// const nacl = require("tweetnacl");
-// const { generateMnemonic, mnemonicToSeedSync } = require("bip39");
-// const { derivePath } = require("ed25519-hd-key");
-// const { Keypair } = require("@solana/web3.js");
-// const express = require("express");
-// const cors = require("cors");
-
-// const app = express();
-// const port = 3000;
-// app.use(cors());
-// /* ---- GLOBAL STATE (for demo) ---- */
-// let mnemonic = null;
-// let seed = null;
-// let walletIndex = 0;
-
-// /* Home */
-// app.get("/", (req, res) => {
-//   res.send("<h1>VaultView API Running 🚀</h1>");
-// });
-
-// /* 1️⃣ Create mnemonic & seed ONCE */
-// app.get("/init-wallet", (req, res) => {
-//   mnemonic = generateMnemonic();
-//   seed = mnemonicToSeedSync(mnemonic);
-//   walletIndex = 0;
-
-//   res.json({
-//     message: "Wallet initialized",
-//     mnemonic
-//   });
-// });
-
-// /* 2️⃣ Generate new wallet (index increases) */
-// app.get("/new-wallet", (req, res) => {
-//   if (!seed) {
-//     return res.status(400).json({
-//       error: "Wallet not initialized. Call /init-wallet first."
-//     });
-//   }
-
-//   const path = `m/44'/501'/${walletIndex}'/0'`;
-//   const derivedSeed = derivePath(path, seed.toString("hex")).key;
-
-//   const keypair = nacl.sign.keyPair.fromSeed(derivedSeed);
-//   const solanaKeypair = Keypair.fromSecretKey(keypair.secretKey);
-
-//   const wallet = {
-//     index: walletIndex,
-//     path,
-//     publicKey: solanaKeypair.publicKey.toBase58(),
-//     privateKey: Buffer.from(keypair.secretKey).toString("hex")
-//   };
-
-//   walletIndex++; // 👈 IMPORTANT (next click = new wallet)
-
-//   res.json(wallet);
-// });
-
-// app.post("/Add_wallet" , (req , res) => {
-//   const receivedData = req.body;
-//   console.log("Data from React:", receivedData);
-//   walletIndex = 0;
-  
-//   seed = mnemonicToSeedSync(receivedData.muword);
-  
-
-
-//   res.json({ message: "Data received successfully!", yourData: seed });
-
-// });
-
-
-// app.listen(port, () => {
-//   console.log(`Server listening at http://localhost:${port}`);
-// });
-
-
-// const nacl = require("tweetnacl");
-// const { generateMnemonic, mnemonicToSeedSync } = require("bip39");
-// const { derivePath } = require("ed25519-hd-key");
-// const { Keypair } = require("@solana/web3.js");
-// const express = require("express");
-// const cors = require("cors");
-
-// const app = express();
-// const port = 3000;
-
-// app.use(cors());
-// app.use(express.json()); // ✅ REQUIRED
-
-// /* ---- GLOBAL STATE (demo only) ---- */
-// let mnemonic = null;
-// let seed = null;
-// let walletIndex = 0;
-
-// /* Home */
-// app.get("/", (req, res) => {
-//   res.send("<h1>VaultView API Running 🚀</h1>");
-// });
-
-// /* 1️⃣ Init wallet */
-// app.get("/init-wallet", (req, res) => {
-//   mnemonic = generateMnemonic();
-//   seed = mnemonicToSeedSync(mnemonic);
-//   walletIndex = 0;
-
-//   res.json({ message: "Wallet initialized", mnemonic });
-// });
-
-// /* 2️⃣ Generate new wallet */
-// app.get("/new-wallet", (req, res) => {
-//   if (!seed) {
-//     return res.status(400).json({ error: "Init wallet first" });
-//   }
-
-//   const path = `m/44'/501'/${walletIndex}'/0'`;
-//   const derivedSeed = derivePath(path, seed.toString("hex")).key;
-
-//   const keypair = nacl.sign.keyPair.fromSeed(derivedSeed);
-//   const solanaKeypair = Keypair.fromSecretKey(keypair.secretKey);
-
-//   walletIndex++;
-
-//   res.json({
-//     index: walletIndex - 1,
-//     path,
-//     publicKey: solanaKeypair.publicKey.toBase58(),
-//     privateKey: Buffer.from(keypair.secretKey).toString("hex")
-//   });
-// });
-
-// /* 3️⃣ Add wallet from mnemonic */
-// app.post("/add-wallet", (req, res) => {
-//   const { muword, derive_path } = req.body;
-
-//   if (!muword) {
-//     return res.status(400).json({ error: "Mnemonic required" });
-//   }
-
-//   seed = mnemonicToSeedSync(muword);
-//   walletIndex = 0;
-
-//   const derivedSeed = derivePath(derive_path, seed.toString("hex")).key;
-//   const keypair = nacl.sign.keyPair.fromSeed(derivedSeed);
-//   const solanaKeypair = Keypair.fromSecretKey(keypair.secretKey);
-
-//   res.json({
-//     message: "Wallet added successfully",
-//     publicKey: solanaKeypair.publicKey.toBase58(),
-//     path: derive_path
-//   });
-// });
-
-// app.listen(port, () => {
-//   console.log(`Server running → http://localhost:${port}`);
-// });
-
-
-
 const nacl = require("tweetnacl");
 const { generateMnemonic, mnemonicToSeedSync } = require("bip39");
 const { derivePath } = require("ed25519-hd-key");
 const { Keypair } = require("@solana/web3.js");
 const express = require("express");
 const cors = require("cors");
+const {
+  Connection,
+  PublicKey,
+  clusterApiUrl,
+  LAMPORTS_PER_SOL
+
+} = require("@solana/web3.js");
 
 const app = express();
 const port = 3000;
@@ -241,6 +89,18 @@ app.post("/check-balance", (req, res) => {
     balance: "$100"
   });
 });
+
+app.post("/balance_get",async  (req, res) => {
+  const { key_p, pa } = req.body; 
+
+  // const balance = key_p;
+  const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+  const address = new PublicKey(key_p);
+  const balance = await connection.getBalance(address);
+
+  res.json({ reply: balance });
+});
+
 
 /* ================= SERVER ================= */
 app.listen(port, () => {
